@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import CartItem from './CartItem';
+import CartItemContext from '../../context/CartItemContext';
 
 const CartWrapper = styled.div`
   width: 100%;

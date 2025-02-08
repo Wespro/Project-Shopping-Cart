@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
+import CartItemContext from '../../context/CartItemContext';
+import { useContext } from 'react';
 
 const CartITem = styled.div`
   width: 95%;
@@ -25,9 +27,14 @@ const CartItemTitle = styled.h1`
   background-size: cover;
 `;
 export default function CartItem() {
+  const [cartItemsArr, setCartItemsArr] = useContext(CartItemContext);
+
   return (
     <CartITem>
-      <CartItemImage itemimage='https://images.pexels.com/photos/3184452/pexels-photo-3184452.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'></CartItemImage>
+      <CartItemImage
+        onClick={() => setCartItemsArr([...cartItemsArr, { name: 'name' }])}
+        itemimage='https://images.pexels.com/photos/3184452/pexels-photo-3184452.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
+      ></CartItemImage>
     </CartITem>
   );
 }

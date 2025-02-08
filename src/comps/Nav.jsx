@@ -1,12 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { CgShoppingCart } from 'react-icons/cg';
+import { use } from 'react';
+import CartItemContext from '../context/CartItemContext';
 const Navbar = styled.nav`
   min-height: 10vh;
-  padding: 0 4rem;
+  width: 100%;
+  padding: 0 2rem;
   display: flex;
-  gap: 4rem;
+  gap: 1rem;
   background-color: #131315;
   align-items: center;
   justify-content: space-between;
@@ -15,14 +18,15 @@ const Navbar = styled.nav`
   top: 0;
 `;
 const VoidShop = styled.h1`
-  font-size: 2.5rem;
+  font-size: clamp(2rem, 2vw, 4rem);
   text-shadow: 1px 1px 7px #f02d65;
 `;
 const NavLinks = styled.ul`
   width: 40%;
   display: flex;
-  gap: 2rem;
+  gap: 1rem;
   justify-content: space-between;
+  align-content: center;
 `;
 const CheckOutBtn = styled.button`
   color: white;
@@ -34,7 +38,7 @@ const CheckOutBtn = styled.button`
 `;
 
 const NavLink = styled(Link)`
-  font-size: 1.6rem;
+  font-size: clamp(0.8rem, 1.2vw, 2rem);
   font-weight: bold;
   text-decoration: none;
   display: flex;
@@ -54,18 +58,19 @@ const CartItemsNum = styled.p`
   right: -8px;
 `;
 
-export default function Nav({ cartItemsArr }) {
-  const cartItemsLength = cartItemsArr.length;
+export default function Nav({}) {
+  const cartitemslength = useContext(CartItemContext)[1].length;
+
   return (
     <Navbar>
-      <CheckOutBtn cartItemsLength={cartItemsLength}>Check out</CheckOutBtn>
+      <CheckOutBtn cartitemslength={cartitemslength}>Check out</CheckOutBtn>
       <VoidShop>Void Shop</VoidShop>
       <NavLinks>
-        <NavLink to={'home'}>Home </NavLink>
+        <NavLink to={'/'}>Home </NavLink>
         <NavLink to={'shop'}>Shop </NavLink>
         <CartLink to={'cart'}>
           <CartItemsNum>
-            {cartItemsLength === 0 ? '' : cartItemsLength}
+            {cartitemslength === 0 ? '' : cartitemslength}
           </CartItemsNum>
           <CgShoppingCart></CgShoppingCart>
         </CartLink>

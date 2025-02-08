@@ -1,9 +1,9 @@
 import styled from 'styled-components';
-import React, { useState } from 'react';
+import React, { act, useReducer, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 const Card = styled.div`
-  height: 35rem;
-  flex: 1;
-  flex-basis: 30rem;
+  height: 30rem;
+  flex: 0 1 25rem;
   border-radius: 14px;
   box-shadow: 1px 1px 10px #f02d65;
   display: flex;
@@ -17,6 +17,7 @@ const Card = styled.div`
 `;
 const CardImage = styled.div`
   background-image: url(${({ itemimage }) => itemimage});
+
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -28,7 +29,7 @@ const CardActions = styled.div`
   display: flex;
   padding: 1rem;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1rem;
 `;
 const ItemInfo = styled.div`
   display: flex;
@@ -45,7 +46,9 @@ const ItemNameWrapper = styled.div`
   align-items: start;
   gap: 0.5rem;
 `;
-const ItemName = styled.h2``;
+const ItemName = styled.h2`
+  font-size: 1rem;
+`;
 const ItemDescription = styled.p``;
 
 //CardPice block
@@ -58,7 +61,7 @@ const CardPiceWrapper = styled.div`
 const ItemPriceName = styled.h3``;
 
 const ItemPrice = styled.h2`
-  font-size: 2.2rem;
+  font-size: 1.5rem;
   color: #f02d65;
 `;
 
@@ -69,7 +72,7 @@ const ItemQuantityWrapper = styled.div`
   align-items: center;
 `;
 const ItemQuantityLabel = styled.label`
-  font-size: 1.2rem;
+  font-size: 0.9rem;
   font-weight: bold;
 `;
 const ItemQuantityInput = styled.h2`
@@ -78,9 +81,10 @@ const ItemQuantityInput = styled.h2`
   outline: none;
   background-color: transparent;
   color: white;
-  font-size: 1.3rem;
+  font-size: 1.1rem;
   padding: 0.5rem;
-  width: 3rem;
+  width: 1.5rem;
+  place-content: center;
   &::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
@@ -88,8 +92,11 @@ const ItemQuantityInput = styled.h2`
   &::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
+
+    &:hover {
+      box-shadow: 1px 1px 5px #f02d65;
+    }
   }
-  box-shadow: 1px 1px 10px #f02d65;
 `;
 const ItemQuantityControls = styled.div`
   display: flex;
@@ -98,14 +105,14 @@ const PlusItemBtn = styled.button`
   background-color: #f02d65;
   color: white;
   border: none;
-
   font-size: 1.5rem;
   padding: 0.5rem;
-  width: 3rem;
+  width: 2.5rem;
   border-top-left-radius: 14px;
   border-bottom-left-radius: 14px;
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
+  align-self: center;
 
   &:hover {
     box-shadow: 1px 1px 5px #f02d65;
@@ -116,11 +123,12 @@ const MinusItemBtn = styled.button`
   color: white;
   font-size: 1.5rem;
   padding: 0.5rem;
-  width: 3rem;
+  width: 2.5rem;
   border-top-right-radius: 14px;
   border-bottom-right-radius: 14px;
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
+  align-self: center;
 
   &:hover {
     box-shadow: 1px 1px 5px #f02d65;
@@ -130,25 +138,44 @@ const MinusItemBtn = styled.button`
 const AddToCartCardBtn = styled.button`
   color: white;
 `;
-export default function ItemCard({
-  item,
-  cartItemsArr,
-  setCartItemsArr,
-  setItemsInCart,
-}) {
-  const [itemQuantityDisplaySt, setItemQuantityDisplaySt] = useState(1);
+
+//reducer fun i choose to make it outside the component to avoid it being redefined on every render
+const reducer = (state, action) => {
+  switch (action.type) {
+    case 'add':
+      return {
+        ...state,
+        itemQuantityDisplaySt: state.itemQuantityDisplaySt + 1,
+      };
+    case 'subtract':
+      return {
+        ...state,
+        itemQuantityDisplaySt: state.itemQuantityDisplaySt - 1,
+      };
+  }
+};
+export default function ItemCard({ item }) {
+  const navigate = useNavigate();
 
   const AddToCartCardBtnClickEvent = (e) => {
     setCartItemsArr([...cartItemsArr, item]);
   };
-  return (
-    <Card>
-      <CardImage itemimage={item.image}></CardImage>
 
+  const [quantity, dispatch] = useReducer(reducer, {
+    itemQuantityDisplaySt: 1,
+  });
+
+  return (
+    <Card
+      onClick={(e) => {
+        navigate('/shop/' + item.id);
+      }}
+    >
+      <CardImage itemimage={item.image}></CardImage>
       <CardActions>
         <ItemInfo>
           <ItemNameWrapper>
-            <ItemName>{item.title}</ItemName>
+            <ItemName>{item.title.substring(0, 67)}</ItemName>
             <ItemDescription>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat,
               officia?
@@ -166,19 +193,21 @@ export default function ItemCard({
           <ItemQuantityControls>
             <PlusItemBtn
               onClick={(e) => {
-                itemQuantityDisplaySt < 30
-                  ? setItemQuantityDisplaySt(itemQuantityDisplaySt + 1)
-                  : itemQuantityDisplaySt;
+                quantity.itemQuantityDisplaySt < 30
+                  ? dispatch({ type: 'add' })
+                  : quantity.itemQuantityDisplaySt;
               }}
             >
               +
             </PlusItemBtn>
-            <ItemQuantityInput>{itemQuantityDisplaySt}</ItemQuantityInput>
+            <ItemQuantityInput>
+              {quantity.itemQuantityDisplaySt}
+            </ItemQuantityInput>
             <MinusItemBtn
               onClick={(e) => {
-                itemQuantityDisplaySt > 1
-                  ? setItemQuantityDisplaySt(itemQuantityDisplaySt - 1)
-                  : itemQuantityDisplaySt;
+                quantity.itemQuantityDisplaySt > 1
+                  ? dispatch({ type: 'subtract' })
+                  : quantity.itemQuantityDisplaySt;
               }}
             >
               -
@@ -187,7 +216,6 @@ export default function ItemCard({
         </ItemQuantityWrapper>
 
         <AddToCartCardBtn onClick={AddToCartCardBtnClickEvent}>
-          {' '}
           Add To Cart
         </AddToCartCardBtn>
       </CardActions>
