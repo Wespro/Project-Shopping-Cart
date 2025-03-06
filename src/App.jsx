@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react';
-
 import './App.css';
 import Nav from './comps/Nav';
 import { Outlet } from 'react-router-dom';
-import CartItemContext from './context/CartItemContext';
 import ItemsContext from './context/itemsContext';
 import styled from 'styled-components';
+import CartItemContext from './context/CartItemContext';
 
 const AppWrapper = styled.div`
   display: flex;
