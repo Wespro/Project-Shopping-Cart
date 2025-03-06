@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useMemo } from 'react';
+import React, { useCallback, useContext, useMemo, useState } from 'react';
 import CartItemContext from '../../../context/CartItemContext';
 import CartItem from '../cartItem/CartItem';
 import {
@@ -21,11 +21,14 @@ import {
   TotalLabel,
   TotalWrapper,
 } from './CartSC';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import SuccessPage from '../../successComp/success';
 
 export default function Cart() {
   const [cartItemsSt, setCartItemsSt] = useContext(CartItemContext);
+  const [checkOut, setCheckOut] = useState(false);
 
+  const navigate = useNavigate();
   const subtotal = useMemo(() => {
     let result = 0;
     for (let item in cartItemsSt) {
@@ -46,6 +49,13 @@ export default function Cart() {
       }
     }
     if (!items.length) {
+      return (
+        <>
+          <NoItems>NO ITEMS IN CART</NoItems>
+          <br />
+          <button onClick={() => navigate('/shop')}>Shop now</button>
+        </>
+      );
     }
     return items;
   };
@@ -53,25 +63,25 @@ export default function Cart() {
   const ClearItemsFunc = () => {
     setCartItemsSt({});
   };
+
+  const checkoutFunc = useCallback(() => {
+    if (Object.keys(cartItemsSt).length) {
+      setCheckOut(true);
+      setCartItemsSt({});
+      const setTimeoutFunc = () => {
+        navigate('/shop');
+        setTimeout(() => setCheckOut(false), 2000);
+      };
+      setTimeout(setTimeoutFunc, 5000);
+    }
+  }, [cartItemsSt]);
+
   return (
     <CartWrapper>
       <CartItemsDisplay>
         <CartTitle>Your Cart</CartTitle>
         <CartItemsWrapper>
-          {Object.keys(cartItemsSt).length ? (
-            displayCartItems()
-          ) : (
-            <>
-              <NoItems>NO ITEMS IN CART</NoItems>
-              <br />
-              <button>
-                <Link style={{ color: 'black' }} to='/shop'>
-                  {' '}
-                  Shop now
-                </Link>
-              </button>
-            </>
-          )}
+          {!checkOut ? displayCartItems() : <SuccessPage />}
         </CartItemsWrapper>
         <CartInvoiceWrapper>
           <SubtotalWrapper>
@@ -91,7 +101,7 @@ export default function Cart() {
           <ClearItemsButton onClick={ClearItemsFunc}>
             Clear Items
           </ClearItemsButton>
-          <CheckOutButton>Check Out </CheckOutButton>
+          <CheckOutButton onClick={checkoutFunc}>Check Out </CheckOutButton>
         </CartActionsWrapper>
       </CartItemsDisplay>
     </CartWrapper>

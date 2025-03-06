@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import './App.css';
-import Nav from './comps/Nav';
+import Nav from './comps/Nav/Nav';
 import { Outlet } from 'react-router-dom';
 import styled from 'styled-components';
 import CartItemContext from './context/CartItemContext';
