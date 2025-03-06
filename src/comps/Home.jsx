@@ -7,39 +7,64 @@ const HomeWrapper = styled.div`
   justify-content: center;
   align-items: center;
   gap: 1rem;
-  width: 100vw;
-  height: 90vh;
-  flex-wrap: wrap;
+  width: 100%;
+  min-height: 90vh;
+
+  @media (max-width: 932px) {
+    padding: 3rem 0;
+    align-items: start;
+  }
 `;
 const HomeCont = styled.div`
   display: flex;
-  width: 90rem;
-  height: 70vh;
+  width: 70%;
+  min-height: 30rem;
   box-shadow: 1px 1px 20px #f02d65;
-`;
-const MainMess = styled.h1`
-  text-align: center;
+  align-items: stretch;
+  flex-wrap: wrap;
 `;
 const MainMessCont = styled.div`
-  width: 50%;
-  height: 100%;
+  flex: 1 0 40rem;
+
   background-color: #16191e;
   display: flex;
   flex-direction: column;
-  gap: 3rem;
+
   justify-content: space-evenly;
   align-items: center;
+  padding: 1rem;
+  @media (max-width: 1850px) {
+    flex: 1 0 20rem;
+    height: 30rem;
+  }
+  @media (max-width: 600px) {
+    flex: 1 0 15rem;
+    height: 15rem;
+  }
 `;
+const MainMess = styled.h1`
+  font-size: clamp(0.8rem, 2rem, 3rem);
+  text-align: center;
+`;
+
 const ImageCont = styled.div`
-  width: 50%;
-  height: 100%;
+  flex: 1 0 40rem;
+
   background-image: url('https://images.pexels.com/photos/2453658/pexels-photo-2453658.jpeg');
   background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
+  background-size: contain;
+  background-position: bottom;
+  @media (max-width: 1850px) {
+    flex: 1 0 20rem;
+    height: 30rem;
+  }
+  @media (max-width: 600px) {
+    flex: 1 0 15rem;
+    height: 15rem;
+  }
 `;
 const ShopNowBtn = styled.button`
-  width: 10rem;
+  width: clamp(2rem, 10rem, 12rem);
   height: 3.5rem;
 `;
 

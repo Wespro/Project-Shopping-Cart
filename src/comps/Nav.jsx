@@ -18,14 +18,14 @@ const Navbar = styled.nav`
   top: 0;
 `;
 const VoidShop = styled.h1`
-  font-size: clamp(2rem, 2vw, 4rem);
+  font-size: clamp(1.5rem, 1.5vw, 4rem);
   text-shadow: 1px 1px 7px #f02d65;
 `;
 const NavLinks = styled.ul`
-  width: 40%;
+  width: clamp(10rem, 20%, 30rem);
   display: flex;
   gap: 1rem;
-  justify-content: space-between;
+  justify-content: space-around;
   align-content: center;
 `;
 const CheckOutBtn = styled.button`
@@ -45,20 +45,20 @@ const NavLink = styled(Link)`
   align-items: center;
 `;
 const CartLink = styled(Link)`
-  font-size: 2.5rem;
+  font-size: clamp(1rem, 2.5rem, 3rem);
   display: flex;
   align-items: center;
   position: relative;
 `;
 const CartItemsNum = styled.p`
-  font-size: 1.5rem;
+  font-size: clamp(0.8rem, 1.5rem, 2rem);
   position: absolute;
   font-weight: bold;
   bottom: -10px;
   right: -8px;
 `;
 
-export default function Nav({}) {
+export default function Nav() {
   const cartitemslength = useContext(CartItemContext)[1].length;
 
   return (

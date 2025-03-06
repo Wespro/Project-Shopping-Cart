@@ -1,67 +1,45 @@
-import React, { useContext, useEffect, useReducer } from 'react';
-import { useParams } from 'react-router-dom';
-import CartItemContext from '../../context/CartItemContext';
-import ItemsContext from '../../context/itemsContext';
 import styled from 'styled-components';
+import React, { act, useContext, useReducer, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { IoMdStar } from 'react-icons/io';
-//this comp will display the item that was clicked on
-//styled components
-const ItemWrapper = styled.div`
-  display: flex;
-  width: clamp(350px, 60vw, 60vw);
-  min-height: 60vh;
-  background-color: #2c313b;
-  border-radius: 14px;
-  flex-wrap: wrap;
-  align-items: center;
-`;
+import CartItemContext from '../../context/CartItemContext';
 
-//ImgContainer block
-const ImgContainer = styled.div`
+const Card = styled.div`
+  height: 30rem;
+  flex: 0 1 25rem;
   border-radius: 14px;
+  box-shadow: 1px 1px 10px #f02d65;
   display: flex;
-  place-content: center;
-  flex: 1 1 30rem;
+  flex-direction: column;
+  background-color: #16191e;
+  transition: 300ms ease;
+  cursor: pointer;
+  &:hover {
+    box-shadow: 1px 1px 30px #f02d65;
+  }
+`;
+const CardImage = styled.div`
+  background-image: url(${({ itemimage }) => itemimage});
+
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  border-top-right-radius: 14px;
+  border-top-left-radius: 14px;
+  flex: 1;
+`;
+const CardActions = styled.div`
+  display: flex;
   padding: 1rem;
-`;
-const ItemImg = styled.img`
-  object-fit: contain;
-  object-position: center;
-  width: 90%;
-  border-radius: 20px;
-`;
-
-//InfoActionsContainer block
-const InfoActionsContainer = styled.div`
-  height: 100%;
-  padding: 2rem 2rem 2rem 1rem;
-  display: flex;
-  gap: 1.5rem;
-  flex-flow: column;
-  flex: 1 1 30rem;
-`;
-
-//InfoContainer block
-
-const ItemInfoContainer = styled.div`
-  height: 100%;
-  display: flex;
-  gap: 2rem;
-`;
-
-const TitleDescriptionWrapper = styled.div`
-  display: flex;
   flex-direction: column;
   gap: 1rem;
 `;
-
-const ItemTitle = styled.h1`
-  font-size: clamp(1rem, 1.6rem, 2rem);
+const ItemInfo = styled.div`
+  display: flex;
+  gap: 2rem;
+  justify-content: space-between;
+  align-items: start;
 `;
-const ItemDescription = styled.p`
-  font-size: clamp(0.6rem, 1.2rem, 1.2rem);
-`;
-
 //ItemReviewsWrapper block
 const ItemReviewsWrapper = styled.div`
   display: flex;
@@ -76,20 +54,32 @@ const ItemReviewsStarsWrapper = styled.div`
 const ItemReviewsPeopleNum = styled.p`
   font-size: 1.1rem;
 `;
-
-//PriceWrapper block
-const PriceWrapper = styled.div`
+// ItemName block
+const ItemNameWrapper = styled.div`
+  text-align: left;
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
-  gap: 1rem;
+  align-items: start;
+  gap: 0.5rem;
+`;
+const ItemName = styled.h2`
+  font-size: 1rem;
+`;
+const ItemDescription = styled.p``;
+
+//CardPice block
+
+const CardPiceWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
   align-items: center;
 `;
-const PriceLabel = styled.h3`
-  font-size: clamp(0.6rem, 1.2rem, 1.5rem);
-`;
+const ItemPriceName = styled.h3``;
+
 const ItemPrice = styled.h2`
-  font-size: clamp(1rem, 2rem, 2.5rem);
-  color: #f02d65;
+  font-size: 1.3rem;
+  color: gold;
 `;
 
 //ItemQuantity block
@@ -99,17 +89,18 @@ const ItemQuantityWrapper = styled.div`
   align-items: center;
 `;
 const ItemQuantityLabel = styled.label`
-  font-size: clamp(0.8rem, 1.1rem, 1.8rem);
+  font-size: 0.9rem;
   font-weight: bold;
 `;
 const ItemQuantityInput = styled.h2`
-  display: flex;
-  justify-content: center;
   background-color: transparent;
   color: white;
   font-size: 1.1rem;
-  padding: 1rem;
+  padding: 0.5rem;
   width: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 const ItemQuantityControls = styled.div`
   display: flex;
@@ -147,6 +138,7 @@ const MinusItemBtn = styled.button`
     box-shadow: 1px 1px 5px #f02d65;
   }
 `;
+////////////////////////////////
 const AddToCartCardBtn = styled.button`
   color: white;
 `;
@@ -166,19 +158,13 @@ const reducer = (state, action) => {
       };
   }
 };
-const ItemPage = () => {
-  const { id } = useParams();
-  //context
-  const [items, setItems] = useContext(ItemsContext);
-  const [cartItemsArr, setCartItemsArr] = useContext(CartItemContext);
-  // reduce
-  const [quantity, dispatch] = useReducer(reducer, {
-    itemQuantityDisplaySt: 1,
-  });
-  const item = items.find((item) => {
-    return item.id == Number(id);
-  });
+export default function ItemCard({ item }) {
+  const navigate = useNavigate();
 
+  //context
+
+  const [cartItemsArr, setCartItemsArr] = useContext(CartItemContext);
+  
   const AddToCartCardBtnClickEvent = (e) => {
     if (cartItemsArr[`${item.id}`]) {
       setCartItemsArr({
@@ -190,35 +176,55 @@ const ItemPage = () => {
             quantity.itemQuantityDisplaySt,
         },
       });
-      console.log(cartItemsArr[`${item.id}`].quantity, cartItemsArr);
     } else {
       setCartItemsArr({
         ...cartItemsArr,
         [`${item.id}`]: { item, quantity: quantity.itemQuantityDisplaySt },
       });
-      console.log(cartItemsArr);
     }
   };
 
+  const [quantity, dispatch] = useReducer(reducer, {
+    itemQuantityDisplaySt: 1,
+  });
   const starsReviews = () => {
     let rate = Math.floor(item?.rating.rate);
+
     let starsArr = [];
-    for (let i = 0; i <= rate; i++) {
-      starsArr.push(
-        <IoMdStar key={i} style={{ color: 'gold', fontSize: '1.4rem' }} />
-      );
+    for (let i = 0; i < 5; i++) {
+      if (i < rate) {
+        starsArr.push(
+          <IoMdStar key={i} style={{ color: 'gold', fontSize: '1.4rem' }} />
+        );
+      } else {
+        starsArr.push(<IoMdStar key={i} style={{ fontSize: '1.4rem' }} />);
+      }
     }
+
     return starsArr;
   };
   return (
-    <ItemWrapper>
-      <ImgContainer>
-        <ItemImg src={item?.image || ''} />
-      </ImgContainer>
-      <InfoActionsContainer>
-        <ItemInfoContainer>
-          <TitleDescriptionWrapper>
-            <ItemTitle>{item?.title || ''}</ItemTitle>
+    <Card>
+      <CardImage
+        onClick={(e) => {
+          navigate('/shop/' + item.id);
+        }}
+        itemimage={item.image}
+      ></CardImage>
+      <CardActions>
+        <ItemInfo
+          onClick={(e) => {
+            navigate('/shop/' + item.id);
+          }}
+        >
+          <ItemNameWrapper>
+            <ItemName>
+              {item.title.substring(0, 50)}...)
+              <a href='' style={{ color: '#ff3679' }}>
+                {' '}
+                see more
+              </a>
+            </ItemName>
             <ItemDescription>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat,
               officia?
@@ -227,20 +233,18 @@ const ItemPage = () => {
               <ItemReviewsStarsWrapper>
                 {starsReviews()}
               </ItemReviewsStarsWrapper>
-              {/* <ItemReviewsNumWrapper> */}
 
               <ItemReviewsPeopleNum>
                 ( {item?.rating.count || 0} )
               </ItemReviewsPeopleNum>
-              {/* </ItemReviewsNumWrapper> */}
             </ItemReviewsWrapper>
-          </TitleDescriptionWrapper>
-        </ItemInfoContainer>
+          </ItemNameWrapper>
 
-        <PriceWrapper>
-          <PriceLabel>Price </PriceLabel>
-          <ItemPrice>{item?.price || 0}$ </ItemPrice>
-        </PriceWrapper>
+          <CardPiceWrapper>
+            <ItemPriceName>Price:</ItemPriceName>
+            <ItemPrice>{`${item.price}$`}</ItemPrice>
+          </CardPiceWrapper>
+        </ItemInfo>
 
         <ItemQuantityWrapper>
           <ItemQuantityLabel htmlFor={'howMany'}>How many?</ItemQuantityLabel>
@@ -268,13 +272,11 @@ const ItemPage = () => {
             </MinusItemBtn>
           </ItemQuantityControls>
         </ItemQuantityWrapper>
+
         <AddToCartCardBtn onClick={AddToCartCardBtnClickEvent}>
           Add To Cart
         </AddToCartCardBtn>
-      </InfoActionsContainer>
-    </ItemWrapper>
+      </CardActions>
+    </Card>
   );
-};
-3;
-
-export default ItemPage;
+}

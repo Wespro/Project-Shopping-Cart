@@ -7,8 +7,15 @@ import CartItemContext from './context/CartItemContext';
 import ItemsContext from './context/itemsContext';
 import styled from 'styled-components';
 
+const AppWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+`;
 function App() {
-  const [cartItemsArr, setCartItemsArr] = useState({});
+  const [cartItemsSt, setCartItemsSt] = useState({});
   const [items, setItems] = useState([]);
 
   useEffect(() => {
@@ -30,14 +37,10 @@ function App() {
       }
     })();
   }, []);
-  const AppWrapper = styled.div`
-    display: flex;
-    flex-direction: column;
-  `;
 
   return (
     <>
-      <CartItemContext.Provider value={[cartItemsArr, setCartItemsArr]}>
+      <CartItemContext.Provider value={[cartItemsSt, setCartItemsSt]}>
         <ItemsContext.Provider value={[items, setItems]}>
           <AppWrapper>
             <Nav />
