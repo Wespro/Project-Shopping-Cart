@@ -4,7 +4,7 @@ import ItemCard from './ItemCard';
 import useDebounce from '../../hoc/useDebounce';
 // import useThrottle from '../../hoc/useThrottle';
 
-import ItemsContext from '../../context/itemsContext';
+import ItemsContext from '../../context/ItemsContext';
 
 const CardsWrapper = styled.div`
   width: 90%;

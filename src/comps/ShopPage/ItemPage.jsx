@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useReducer } from 'react';
 import { useParams } from 'react-router-dom';
 import CartItemContext from '../../context/CartItemContext';
-import ItemsContext from '../../context/itemsContext';
+import ItemsContext from '../../context/ItemsContext';
 import styled from 'styled-components';
 import { IoMdStar } from 'react-icons/io';
 //this comp will display the item that was clicked on

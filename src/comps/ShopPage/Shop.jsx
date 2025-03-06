@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Outlet } from 'react-router-dom';
-import ItemsContext from '../../context/itemsContext';
+import ItemsContext from '../../context/ItemsContext';
 import { useContext } from 'react';
 
 const ShopPage = styled.div`
