@@ -1,9 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
-import ItemCard from './ItemCard';
+import ItemCard from './ItemCard/ItemCard';
 import useDebounce from '../../hoc/useDebounce';
 // import useThrottle from '../../hoc/useThrottle';
-
 import ItemsContext from '../../context/ItemsContext';
 
 const CardsWrapper = styled.div`

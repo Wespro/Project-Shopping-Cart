@@ -1,4 +1,4 @@
-import { Link  } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 export const Navbar = styled.nav`
@@ -13,6 +13,9 @@ export const Navbar = styled.nav`
   box-shadow: 1px 1px 20px #f02d65;
   position: sticky;
   top: 0;
+  @media (max-width: 500px) {
+    padding: 0 1rem;
+  }
 `;
 export const VoidShop = styled.h1`
   font-size: clamp(1.5rem, 1.5vw, 4rem);
@@ -42,13 +45,14 @@ export const NavLink = styled(Link)`
   align-items: center;
 `;
 export const CartLink = styled(Link)`
-  font-size: clamp(1rem, 2.5rem, 3rem);
+  font-size: clamp(2rem, 3vw, 3rem);
   display: flex;
   align-items: center;
   position: relative;
 `;
 export const CartItemsNum = styled.p`
   font-size: clamp(0.8rem, 1.5rem, 2rem);
+  color: gold;
   position: absolute;
   font-weight: bold;
   bottom: -10px;

@@ -34,6 +34,7 @@ export const CartItemsWrapper = styled.div`
   gap: 1rem;
 `;
 export const NoItems = styled.h1`
+  text-align: center;
   color: #f02d65;
 `;
 export const CartInvoiceWrapper = styled.div`
@@ -88,7 +89,9 @@ export const CartActionsWrapper = styled.div`
   gap: 2rem;
 `;
 
-export const ClearItemsButton = styled.button``;
+export const ClearItemsButton = styled.button`
+
+`;
 
 export const CheckOutButton = styled.button`
   background-color: green;

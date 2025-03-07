@@ -24,10 +24,11 @@ import {
   PriceWrapper,
   TitleDescriptionWrapper,
 } from './cartItemSC';
+import { useNavigate } from 'react-router-dom';
 
 export default function CartItem({ item }) {
   const [cartItemsSt, setCartItemsSt] = useContext(CartItemContext);
-
+  const navigate = useNavigate();
   const editCartItemsSt = (action) => {
     switch (action) {
       case 'add':
@@ -85,7 +86,9 @@ export default function CartItem({ item }) {
   return (
     <CartITem>
       <CartItemImage
-        onClick={() => setCartItemsSt([...cartItemsSt, { name: 'name' }])}
+        onClick={(e) => {
+          navigate('/shop/' + item.item.id);
+        }}
         itemimage={item.item.image}
       ></CartItemImage>
       <InfoActionsContainer>
@@ -93,8 +96,12 @@ export default function CartItem({ item }) {
           <TitleDescriptionWrapper>
             <ItemTitle>
               {item.item.title?.slice(0, 50)}...)
-              <a href='' style={{ color: '#ff3679' }}>
-                {' '}
+              <a
+                onClick={(e) => {
+                  navigate('/shop/' + item.item.id);
+                }}
+                style={{ color: '#ff3679', cursor: 'pointer' }}
+              >
                 see more
               </a>
             </ItemTitle>
