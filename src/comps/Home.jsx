@@ -19,13 +19,14 @@ const HomeWrapper = styled.div`
 const HomeCont = styled.div`
   display: flex;
   width: 70%;
+  min-width: 8rem;
   min-height: 30rem;
   box-shadow: 1px 1px 20px #f02d65;
   align-items: stretch;
   flex-wrap: wrap;
 `;
 const MainMessCont = styled.div`
-  flex: 1 0 40rem;
+  flex: 1 1 40rem;
 
   background-color: #16191e;
   display: flex;
@@ -35,38 +36,38 @@ const MainMessCont = styled.div`
   align-items: center;
   padding: 1rem;
   @media (max-width: 1850px) {
-    flex: 1 0 20rem;
+    flex: 1 1 20rem;
     height: 30rem;
   }
   @media (max-width: 600px) {
-    flex: 1 0 15rem;
+    flex: 1 1 15rem;
     height: 15rem;
   }
 `;
 const MainMess = styled.h1`
-  font-size: clamp(0.8rem, 2rem, 3rem);
+  font-size: clamp(1.5rem, 2vw, 3rem);
   text-align: center;
 `;
 
 const ImageCont = styled.div`
-  flex: 1 0 40rem;
+  flex: 1 1 40rem;
 
   background-image: url('https://images.pexels.com/photos/2453658/pexels-photo-2453658.jpeg');
   background-repeat: no-repeat;
   background-size: contain;
   background-position: bottom;
   @media (max-width: 1850px) {
-    flex: 1 0 20rem;
+    flex: 1 1 20rem;
     height: 30rem;
   }
   @media (max-width: 600px) {
-    flex: 1 0 15rem;
+    flex: 1 1 15rem;
     height: 15rem;
   }
 `;
 const ShopNowBtn = styled.button`
-  width: clamp(2rem, 10rem, 12rem);
-  height: 3.5rem;
+  width: clamp(8rem, 20vw, 12rem);
+  padding: 0.7rem 0;
 `;
 
 const ShopBtnLink = styled(Link)`

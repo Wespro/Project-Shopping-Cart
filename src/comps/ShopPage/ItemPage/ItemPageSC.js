@@ -3,7 +3,7 @@ import styled from 'styled-components';
 //styled components
 export const ItemWrapper = styled.div`
   display: flex;
-  width: clamp(320px, 60vw, 60vw);
+  width: clamp(320px, 60vw, 50rem);
   min-height: 60vh;
   background-color: #2c313b;
   border-radius: 14px;
@@ -21,6 +21,7 @@ export const ImgContainer = styled.div`
   border-radius: 14px;
   @media (max-width: 632px) {
     height: 20rem;
+    width: 20rem;
   }
 `;
 export const ItemImg = styled.img`

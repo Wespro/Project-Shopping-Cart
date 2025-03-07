@@ -17,19 +17,19 @@ export const CartITem = styled.div`
   }
 `;
 export const CartItemImage = styled.img`
-  flex: 1 0 10rem;
+  flex: 1 1 10rem;
   min-height: 10rem;
   display: flex;
   background-image: url(${({ itemimage }) => itemimage});
-  background-position: center;
+  background-position: center center;
   background-size: contain;
   background-repeat: no-repeat;
-  outline: none;
 `;
 
 //InfoActionsContainer block
 export const InfoActionsContainer = styled.div`
-  flex: 3 0 10rem;
+  flex: 3 1 30rem;
+
   height: 100%;
   padding: 1rem;
   display: flex;
