@@ -5,6 +5,9 @@ import { Outlet } from 'react-router-dom';
 import styled from 'styled-components';
 import CartItemContext from './context/CartItemContext';
 import ItemsContext from './context/ItemsContext';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
+const queryClient = new QueryClient();
 
 const AppWrapper = styled.div`
   display: flex;
@@ -17,36 +20,18 @@ function App() {
   const [cartItemsSt, setCartItemsSt] = useState({});
   const [items, setItems] = useState([]);
 
-  useEffect(() => {
-    (async function fetchData() {
-      const ReqResult = await fetch(
-        'https://fakestoreapi.com/products/category/electronics'
-      );
-
-      try {
-        if (ReqResult.status >= 400) {
-          throw new Error('Server error');
-        }
-
-        const data = await ReqResult.json();
-
-        setItems([...data]);
-      } catch (err) {
-        console.log(err);
-      }
-    })();
-  }, []);
-
   return (
     <>
-      <CartItemContext.Provider value={[cartItemsSt, setCartItemsSt]}>
-        <ItemsContext.Provider value={[items, setItems]}>
-          <AppWrapper>
-            <Nav />
-            <Outlet />
-          </AppWrapper>
-        </ItemsContext.Provider>
-      </CartItemContext.Provider>
+      <QueryClientProvider client={queryClient}>
+        <CartItemContext.Provider value={[cartItemsSt, setCartItemsSt]}>
+          <ItemsContext.Provider value={[items, setItems]}>
+            <AppWrapper>
+              <Nav />
+              <Outlet />
+            </AppWrapper>
+          </ItemsContext.Provider>
+        </CartItemContext.Provider>
+      </QueryClientProvider>
     </>
   );
 }

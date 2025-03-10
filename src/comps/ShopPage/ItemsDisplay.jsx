@@ -4,6 +4,7 @@ import ItemCard from './ItemCard/ItemCard';
 import useDebounce from '../../hoc/useDebounce';
 // import useThrottle from '../../hoc/useThrottle';
 import ItemsContext from '../../context/ItemsContext';
+import { useQuery } from '@tanstack/react-query';
 
 const CardsWrapper = styled.div`
   width: 90%;
@@ -18,7 +19,7 @@ const ItemsNumSearch = styled.div`
   padding: 1rem 4rem;
   width: 90%;
   align-items: center;
-  justify-content: center;
+
   gap: clamp(1rem, 8%, 8rem);
   flex-wrap: wrap;
 `;
@@ -38,24 +39,47 @@ const SearchBar = styled.input`
   }
 `;
 const ItemsDisplay = () => {
+  //context
   const [items, setItems] = useContext(ItemsContext);
-  const [filteredItems, setFilteredItems] = useState(items);
+  const fetchItems = async () => {
+    let data = [];
+
+    const ReqResult = await fetch(
+      'https://fakestoreapi.com/products/category/electronics'
+    );
+
+    try {
+      if (ReqResult.status >= 400) {
+        throw new Error('Server error');
+      }
+
+      data = await ReqResult.json();
+      setItems(data);
+      return data || [];
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const { isPending } = useQuery({
+    queryFn: () => fetchItems(),
+    queryKey: ['shopItems'],
+  });
+  const [filteredItems, setFilteredItems] = useState([]);
   const [searchValue, setSearchValue] = useState('');
   // const throttleFunc = useThrottle(() => {
   //   console.log(searchValue);
   // }, 3000);
-
-  const debounceVal = useDebounce(searchValue, 500);
 
   useEffect(() => {
     setFilteredItems(items);
   }, [items]);
 
   // update  filtered
+  const debounceVal = useDebounce(searchValue, 500);
   useEffect(() => {
     (() => {
       setFilteredItems(
-        items.filter((item) => {
+        items?.filter((item) => {
           return item.title.toLowerCase().includes(debounceVal.toLowerCase());
         })
       );
@@ -67,6 +91,7 @@ const ItemsDisplay = () => {
   //     throttleFunc();
   //   })();
   // }, [searchValue]);
+
   return (
     <>
       <ItemsNumSearch>
@@ -77,13 +102,19 @@ const ItemsDisplay = () => {
           value={searchValue}
           placeholder='Search for Items'
         ></SearchBar>
-        <ItemsDisplayedNum> {items.length} items</ItemsDisplayedNum>
+        <ItemsDisplayedNum>
+          {filteredItems?.length} {filteredItems?.length > 1 ? 'items' : 'item'}
+        </ItemsDisplayedNum>
       </ItemsNumSearch>
 
       <CardsWrapper>
-        {filteredItems.map((item, index) => {
-          return <ItemCard key={item.id + item.title} item={item} />;
-        })}
+        {isPending ? (
+          <h1>Loading...</h1>
+        ) : (
+          filteredItems?.map((item) => {
+            return <ItemCard key={item.id + item.title} item={item} />;
+          })
+        )}
       </CardsWrapper>
     </>
   );

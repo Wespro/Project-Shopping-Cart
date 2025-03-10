@@ -1,7 +1,5 @@
 import styled from 'styled-components';
 import { Outlet } from 'react-router-dom';
-import ItemsContext from '../../context/ItemsContext';
-import { useContext } from 'react';
 
 const ShopPage = styled.div`
   min-height: 90vh;
@@ -11,15 +9,13 @@ const ShopPage = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: start;
 `;
 
 export default function Shop() {
-  const [items, setItems] = useContext(ItemsContext);
-
   return (
     <ShopPage>
-      <Outlet context={items} />
+      <Outlet />
     </ShopPage>
   );
 }
