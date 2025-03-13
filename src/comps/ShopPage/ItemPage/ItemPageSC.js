@@ -3,12 +3,13 @@ import styled from 'styled-components';
 //styled components
 export const ItemWrapper = styled.div`
   display: flex;
-  width: clamp(320px, 60vw, 50rem);
+  width: clamp(320px, 70vw, 70rem);
   min-height: 60vh;
   background-color: #2c313b;
   border-radius: 14px;
   flex-wrap: wrap;
   align-items: center;
+  justify-content: center;
 `;
 
 //ImgContainer block
@@ -17,7 +18,7 @@ export const ImgContainer = styled.div`
   place-content: center;
   flex: 1 1 25rem;
   padding: 2rem;
-  height: 60vh;
+  height: 55vh;
   border-radius: 14px;
   @media (max-width: 632px) {
     height: 20rem;

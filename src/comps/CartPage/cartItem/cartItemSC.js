@@ -88,6 +88,7 @@ export const PriceWrapper = styled.div`
   flex-direction: column;
   gap: 1rem;
   align-items: center;
+  flex-wrap: wrap;
   @media (max-width: 500px) {
     width: 100%;
     flex-direction: row;
@@ -98,7 +99,7 @@ export const PriceLabel = styled.h3`
   font-size: clamp(0.6rem, 1.2rem, 1.5rem);
 `;
 export const ItemPrice = styled.h2`
-  font-size: clamp(1rem, 1.8rem, 2.5rem);
+  font-size: clamp(1.2rem, 1.5vw, 2.5rem);
   color: gold;
 `;
 

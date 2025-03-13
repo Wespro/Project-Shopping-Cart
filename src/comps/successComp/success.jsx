@@ -17,20 +17,20 @@ const SuccessCard = styled(motion.div)`
   padding: 30px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   text-align: center;
-  width: 90%;
+  width: clamp(15rem, 80%, 30rem);
   max-width: 500px;
 `;
 
 const Title = styled(motion.h1)`
   color: #00796b;
-  font-size: 2.5rem;
+  font-size: clamp(1.8rem, 2vw, 2.5rem);
   margin-bottom: 20px;
   text-shadow: 1px 1px 1px solid;
 `;
 
 const SuccessMessage = styled.p`
   color: #4caf50;
-  font-size: 1.2rem;
+  font-size: clamp(1rem, 1vw, 1.2rem);
   font-weight: bold;
   text-shadow: 1px 1px 1px solid;
   margin-bottom: 30px;
@@ -40,8 +40,8 @@ const Button = styled.button`
   background-color: #00796b;
   color: white;
   border: none;
-  padding: 12px 30px;
-  font-size: 1rem;
+  padding: 1rem;
+  font-size: clamp(0.8rem, 1vw, 1.5rem);
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.2s;

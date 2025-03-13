@@ -9,8 +9,7 @@ const ShopPage = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: start;
-  position: relative;
+  justify-content: center;
 `;
 
 export default function Shop() {

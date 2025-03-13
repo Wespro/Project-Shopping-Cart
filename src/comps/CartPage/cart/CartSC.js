@@ -47,7 +47,7 @@ export const CartInvoiceWrapper = styled.div`
 export const SubtotalWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
-  gap: 1rem;
+  gap: .5rem;
   justify-content: space-between;
   align-items: center;
 `;
