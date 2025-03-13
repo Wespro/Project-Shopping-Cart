@@ -13,6 +13,7 @@ export const Navbar = styled.nav`
   box-shadow: 1px 1px 20px #f02d65;
   position: sticky;
   top: 0;
+  z-index: 1;
   @media (max-width: 500px) {
     padding: 0 1rem;
   }

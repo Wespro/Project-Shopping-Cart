@@ -21,7 +21,9 @@ export const CardImageWrapper = styled.div`
   max-height: 12rem;
   padding: 1rem;
 `;
-export const CardImage = styled.div`
+export const CardImage = styled.div.withConfig({
+  shouldForwardProp: (prop) => prop !== 'itemimage',
+})`
   height: 100%;
   background-image: url(${({ itemimage }) => itemimage});
   background-repeat: no-repeat;

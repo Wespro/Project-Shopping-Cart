@@ -3,8 +3,9 @@ import App from './App';
 import Home from './comps/Home';
 import ItemPage from './comps/ShopPage/ItemPage/ItemPage';
 import Shop from './comps/ShopPage/Shop';
-import ItemsDisplay from './comps/ShopPage/ItemsDisplay';
+
 import Cart from './comps/CartPage/cart/Cart';
+import ItemsDisplay from './comps/ShopPage/ItemsDisplay/ItemsDisplay.jsx';
 
 export const router = createBrowserRouter([
   {

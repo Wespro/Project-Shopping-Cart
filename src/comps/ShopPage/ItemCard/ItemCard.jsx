@@ -3,6 +3,7 @@ import React, { act, useContext, useReducer, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { IoMdStar } from 'react-icons/io';
 import CartItemContext from '../../../context/CartItemContext';
+import { LuFilter } from 'react-icons/lu';
 import {
   AddToCartCardBtn,
   Card,
