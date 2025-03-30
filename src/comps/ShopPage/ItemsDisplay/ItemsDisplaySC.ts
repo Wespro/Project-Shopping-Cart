@@ -9,11 +9,11 @@ export const CardsWrapper = styled.div`
 `;
 export const ItemsControls = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   padding: 1rem 10%;
   width: 90%;
   align-items: center;
-  gap: 2rem;
+  gap: 3rem;
   flex-wrap: wrap;
   @media (max-width: 1121px) {
     display: none;
@@ -21,17 +21,21 @@ export const ItemsControls = styled.div`
 `;
 
 export const SearchBar = styled.input`
+  flex: 1;
   width: clamp(200px, 40%, 400px);
   padding: 0.7rem 1rem;
   border: none;
   outline: none;
   border-radius: 50px;
+  background-color: white;
+  color: black;
   font-size: 1rem;
   &::placeholder {
     content: 'Search for items';
   }
 `;
 export const PriceFilterWrapper = styled.div`
+  flex: 1;
   display: flex;
   gap: 0.7rem;
   align-items: center;
@@ -39,6 +43,7 @@ export const PriceFilterWrapper = styled.div`
   flex-wrap: wrap;
 `;
 export const PriceFilterInput = styled.input`
+  flex: 1;
   width: clamp(200px, 30%, 400px);
   cursor: pointer;
 `;
@@ -46,14 +51,15 @@ export const PriceFilterValue = styled.h3`
   color: gold;
 `;
 export const Select = styled.select`
-  width: clamp(150px, 10%, 200px);
+  flex: 1;
+  width: clamp(200px, 10%, 300px);
   height: 35px;
   background: white;
   color: gray;
-  padding: 5px;
-  font-size: 14px;
+  padding: 0 1rem;
   border: none;
-  margin-left: 10px;
+  appearance: none;
+  border-radius: 5px;
 
   option {
     color: black;
@@ -69,5 +75,9 @@ export const Select = styled.select`
   }
 `;
 export const ItemsDisplayedNum = styled.h2`
-  color: aliceblue;
+  flex: 1 1 6rem;
+  display: inline-block;
+  color: #ff3679;
+  font-size: 1.5rem;
+  font-weight: bold;
 `;

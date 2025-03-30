@@ -1,20 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import SuccessPage from './successComp/success';
-
+import Carousel1 from './Carousel1';
 const HomeWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 1rem;
+  flex-direction: column;
+  padding: 8rem 0;
+  gap: 5rem;
   width: 100%;
-  min-height: 90vh;
-
-  @media (max-width: 932px) {
-    padding: 3rem 0;
-    align-items: start;
-  }
+  min-height: 100vh;
+  background-color: #16191e;
 `;
 const HomeCont = styled.div`
   display: flex;
@@ -22,21 +19,20 @@ const HomeCont = styled.div`
   min-width: 8rem;
   min-height: 30rem;
   box-shadow: 1px 1px 20px #f02d65;
-  align-items: stretch;
   flex-wrap: wrap;
 `;
 const MainMessCont = styled.div`
   flex: 1 1 40rem;
-
   background-color: #16191e;
   display: flex;
   flex-direction: column;
-
+  color: white;
+  font-weight: bold;
   justify-content: space-evenly;
   align-items: center;
   padding: 1rem;
   @media (max-width: 1850px) {
-    flex: 1 1 20rem;
+    flex: 1 1 40rem;
     height: 30rem;
   }
   @media (max-width: 600px) {
@@ -45,21 +41,20 @@ const MainMessCont = styled.div`
   }
 `;
 const MainMess = styled.h1`
-  font-size: clamp(1.5rem, 2vw, 3rem);
+  width: clamp(8rem, 30vw, 30rem);
+  font-size: clamp(1.1rem, 3vw, 2.4rem);
   text-align: center;
+  line-height: 2;
 `;
 
 const ImageCont = styled.div`
   flex: 1 1 40rem;
-
+  height: 30rem;
   background-image: url('https://images.pexels.com/photos/2453658/pexels-photo-2453658.jpeg');
   background-repeat: no-repeat;
   background-size: contain;
   background-position: bottom;
-  @media (max-width: 1850px) {
-    flex: 1 1 20rem;
-    height: 30rem;
-  }
+
   @media (max-width: 600px) {
     flex: 1 1 15rem;
     height: 15rem;
@@ -73,18 +68,34 @@ const ShopNowBtn = styled.button`
 const ShopBtnLink = styled(Link)`
   color: #eeeeee;
 `;
+const CarouselWrapper = styled.div`
+  padding: 5rem;
+  box-shadow: 1px 1px 7px #f02d65;
+  width: 70%;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  @media (max-width: 800px) {
+    padding: 1rem;
+    width: 90%;
+  }
+`;
 export default function Home() {
   return (
     <HomeWrapper>
       <HomeCont>
         <MainMessCont>
-          <MainMess>Get your Electronics</MainMess>
+          <MainMess>"Deals That Deliver, Quality That Lasts!"</MainMess>
           <ShopNowBtn>
             <ShopBtnLink to='/shop'>Shop Now</ShopBtnLink>
           </ShopNowBtn>
         </MainMessCont>
         <ImageCont> </ImageCont>
       </HomeCont>
+      {/* <CarouselWrapper>
+        <Carousel1 />
+      </CarouselWrapper> */}
     </HomeWrapper>
   );
 }

@@ -26,10 +26,14 @@ import {
   PriceWrapper,
   TitleDescriptionWrapper,
 } from './ItemPageSC';
+import { item } from '@/Types/types';
 //this comp will display the item that was clicked on
 
 //reducer fun i choose to make it outside the component to avoid it being redefined on every render
-const reducer = (state, action) => {
+const reducer = (
+  state: { itemQuantityDisplaySt: number },
+  action: { type: 'add' | 'subtract' }
+): { itemQuantityDisplaySt: number } => {
   switch (action.type) {
     case 'add':
       return {
@@ -46,55 +50,68 @@ const reducer = (state, action) => {
 const ItemPage = () => {
   const { id } = useParams();
   //context
-  const [items, setItems] = useContext(ItemsContext);
-  const [cartItemsArr, setCartItemsArr] = useContext(CartItemContext);
+  const { items, category, setCategory, setItems } = useContext(ItemsContext);
+
+  const { cartItemsObj, setCartItemsObj } = useContext(CartItemContext);
   // reduce
-  const [quantity, dispatch] = useReducer(reducer, {
+  const initialState: { itemQuantityDisplaySt: number } = {
     itemQuantityDisplaySt: 1,
-  });
-  const item = items.find((item) => {
+  };
+  const [quantity, dispatch] = useReducer<typeof reducer>(
+    reducer,
+    initialState
+  );
+
+  const item = items?.find((item: item) => {
     return item.id == Number(id);
   });
 
-  const AddToCartCardBtnClickEvent = (e) => {
-    if (cartItemsArr[`${item.id}`]) {
-      setCartItemsArr({
-        ...cartItemsArr,
-        [`${item.id}`]: {
-          ...cartItemsArr[`${item.id}`],
-          quantity:
-            cartItemsArr[`${item.id}`].quantity +
-            quantity.itemQuantityDisplaySt,
-        },
-      });
-    } else {
-      setCartItemsArr({
-        ...cartItemsArr,
-        [`${item.id}`]: { item, quantity: quantity.itemQuantityDisplaySt },
-      });
+  const AddToCartCardBtnClickEvent = (
+    e: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    if (item) {
+      if (cartItemsObj[`${item.id}`]) {
+        setCartItemsObj({
+          ...cartItemsObj,
+          [`${item.id}`]: {
+            ...cartItemsObj[`${item.id}`],
+            quantity:
+              cartItemsObj[`${item.id}`].quantity +
+              quantity.itemQuantityDisplaySt,
+          },
+        });
+      } else {
+        setCartItemsObj({
+          ...cartItemsObj,
+          [`${item.id}`]: { item, quantity: quantity.itemQuantityDisplaySt },
+        });
+      }
     }
     // UI
-    e.target.style.backgroundColor = 'green';
-    e.target.textContent = 'Added';
+    (e.target as HTMLButtonElement).style.backgroundColor = 'green';
+    (e.target as HTMLButtonElement).textContent = 'Added';
     setTimeout(() => {
-      e.target.style.backgroundColor = '#f02d65';
-      e.target.textContent = 'Add To Cart';
+      (e.target as HTMLButtonElement).style.backgroundColor = '#f02d65';
+      (e.target as HTMLButtonElement).textContent = 'Add To Cart';
     }, 1000);
   };
 
   const starsReviews = () => {
-    let rate = Math.floor(item?.rating.rate);
-    let starsArr = [];
-    for (let i = 0; i < 5; i++) {
-      if (i < rate) {
-        starsArr.push(
-          <IoMdStar key={i} style={{ color: 'gold', fontSize: '1.4rem' }} />
-        );
-      } else {
-        starsArr.push(<IoMdStar key={i} style={{ fontSize: '1.4rem' }} />);
+    if (item) {
+      let rate = Math.floor(item?.rating?.rate);
+
+      let starsArr = [];
+      for (let i = 0; i < 5; i++) {
+        if (i < rate) {
+          starsArr.push(
+            <IoMdStar key={i} style={{ color: 'gold', fontSize: '1.4rem' }} />
+          );
+        } else {
+          starsArr.push(<IoMdStar key={i} style={{ fontSize: '1.4rem' }} />);
+        }
       }
+      return starsArr;
     }
-    return starsArr;
   };
   return (
     <ItemWrapper>

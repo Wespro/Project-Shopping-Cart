@@ -6,20 +6,24 @@ import {
   PriceFilterWrapper,
   SearchBar,
   Select,
-} from '../ItemsDisplay';
+} from '../ItemsDisplaySC';
 import styled from 'styled-components';
 import { LuFilter } from 'react-icons/lu';
+import { FilterCompPropsType } from '@/Types/types';
 
 const ItemsControlsMobile = styled.div`
-  width: clamp(18rem, 80vw, 82rem);
-
+  justify-self: start;
+  width: clamp(18rem, 80vw, 100%);
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   gap: 3rem;
   border-radius: 14px;
   background-color: #343434;
   padding: 2rem;
+  @media (max-width: 700px) {
+    gap: 4.5rem;
+  }
 `;
 
 const FilterIcon = styled(LuFilter)`
@@ -46,42 +50,38 @@ const FilterComp = ({
   setCategory,
   setSort,
   filteredItems,
-}) => {
-  const itemsControls = useRef();
+}: FilterCompPropsType) => {
+  const itemsControls = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
-    itemsControls.current.classList.add('hide');
+    itemsControls.current?.classList.add('hide');
   }, []);
   const showFilter = () => {
-    // itemsControls.current.style.display === 'flex'
     //   ? (itemsControls.current.style.display = 'none')
-    //   : (itemsControls.current.style.display = 'flex');
-    if (itemsControls.current.classList.contains('hide')) {
+
+    if (itemsControls.current?.classList.contains('hide')) {
       itemsControls.current.classList.remove('hide');
       itemsControls.current.classList.add('show');
       return;
     }
-    itemsControls.current.classList.add('hide');
-    itemsControls.current.classList.remove('show');
+    itemsControls.current?.classList.add('hide');
+    itemsControls.current?.classList.remove('show');
   };
   return (
     <>
-      <FilterBtn onClick={showFilter}>
-        Filters
-        <FilterIcon />
-      </FilterBtn>
+      <FilterBtn onClick={showFilter}>Filters</FilterBtn>
       <ItemsControlsMobile ref={itemsControls}>
         <SearchBar
-          onInput={(e) => {
+          onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
             setSearchValue(e.target.value);
           }}
           value={searchValue}
-          placeholder='Search for Items'
+          placeholder={`Search for Items`}
         ></SearchBar>
         <PriceFilterWrapper>
           <PriceFilterInput
             value={priceFilter}
-            onInput={(e) => {
-              setPriceFilter(e.target.value);
+            onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
+              setPriceFilter(+e.target.value);
             }}
             type='range'
             max={1000}
@@ -107,9 +107,9 @@ const FilterComp = ({
           }}
           id='sort'
         >
-          <option value='toLowestRate'> to Lowest Rate </option>
-          <option value='toLowestPrice'>to Lowest price </option>
-          <option value='toHighestPrice'>to Highest Price </option>
+          <option value='lowestRateToHighest'> Lowest Rate To Highest </option>
+          <option value='lowestPriceToHighest'>Lowest Price To Highest </option>
+          <option value='highestPriceToLowest'>Highest Price To Lowest </option>
         </Select>
         <ItemsDisplayedNum>
           {filteredItems?.length} {filteredItems?.length > 1 ? 'items' : 'item'}

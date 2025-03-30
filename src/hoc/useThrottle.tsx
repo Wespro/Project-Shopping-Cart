@@ -1,17 +1,20 @@
 import React, { useRef } from 'react';
 
-const useThrottle = (cb, wait) => {
-  let lastRun = useRef(Date.now());
-  let currentArgs = useRef();
-  let timer = useRef();
+const useThrottle = (cb: (...args: any[]) => void, wait: number) => {
+  let lastRun = useRef<number>(Date.now());
+  let currentArgs = useRef<any[]>([]);
+  let timer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  return (...args) => {
+  return (...args: any[]): void => {
     if (Date.now() - lastRun.current >= wait) {
       cb(...args);
+
       lastRun.current = Date.now();
     } else {
       currentArgs.current = args;
-      clearTimeout(timer.current);
+      if (timer.current) {
+        clearTimeout(timer.current);
+      }
       timer.current = setTimeout(() => {
         cb(...args);
         lastRun.current = Date.now();

@@ -4,12 +4,12 @@ import { Outlet } from 'react-router-dom';
 const ShopPage = styled.div`
   min-height: 90vh;
   width: 100%;
-  padding: 2rem;
-  gap: 2rem;
+  padding: 4rem 0;
+  gap: 4rem;
   display: flex;
   flex-direction: column;
+  justify-content: start;
   align-items: center;
-  justify-content: center;
 `;
 
 export default function Shop() {

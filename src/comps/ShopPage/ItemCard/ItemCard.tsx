@@ -1,9 +1,7 @@
-import styled from 'styled-components';
-import React, { act, useContext, useReducer, useState } from 'react';
+import { useContext, useReducer } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { IoMdStar } from 'react-icons/io';
 import CartItemContext from '../../../context/CartItemContext';
-import { LuFilter } from 'react-icons/lu';
 import {
   AddToCartCardBtn,
   Card,
@@ -27,9 +25,13 @@ import {
   MinusItemBtn,
   PlusItemBtn,
 } from './ItemCardSC';
+import { item } from '@/Types/types';
 
-//reducer fun i choose to make it outside the component to avoid it being redefined on every render
-const reducer = (state, action) => {
+//reducer func i choose to make it outside the component to avoid it being redefined on every render
+type State = { itemQuantityDisplaySt: number };
+type Action = { type: 'add' } | { type: 'subtract' };
+
+const reducer = (state: State, action: Action): State => {
   switch (action.type) {
     case 'add':
       return {
@@ -43,42 +45,46 @@ const reducer = (state, action) => {
       };
   }
 };
-export default function ItemCard({ item }) {
+export default function ItemCard({ item }: { item: item }) {
   const navigate = useNavigate();
 
   //context
 
-  const [cartItemsArr, setCartItemsArr] = useContext(CartItemContext);
+  const { cartItemsObj, setCartItemsObj } = useContext(CartItemContext);
 
-  const AddToCartCardBtnClickEvent = (e) => {
-    if (cartItemsArr[`${item.id}`]) {
-      setCartItemsArr({
-        ...cartItemsArr,
+  const AddToCartCardBtnClickEvent = (
+    e: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    if (cartItemsObj[`${item.id}`]) {
+      setCartItemsObj({
+        ...cartItemsObj,
         [`${item.id}`]: {
-          ...cartItemsArr[`${item.id}`],
+          ...cartItemsObj[`${item.id}`],
           quantity:
-            cartItemsArr[`${item.id}`].quantity +
+            cartItemsObj[`${item.id}`].quantity +
             quantity.itemQuantityDisplaySt,
         },
       });
     } else {
-      setCartItemsArr({
-        ...cartItemsArr,
+      setCartItemsObj({
+        ...cartItemsObj,
         [`${item.id}`]: { item, quantity: quantity.itemQuantityDisplaySt },
       });
     }
     // UI
-    e.target.style.backgroundColor = 'green';
-    e.target.textContent = 'Added';
+    (e.target as HTMLButtonElement).style.backgroundColor = 'green';
+    (e.target as HTMLButtonElement).textContent = 'Added';
     setTimeout(() => {
-      e.target.style.backgroundColor = '#f02d65';
-      e.target.textContent = 'Add To Cart';
+      (e.target as HTMLButtonElement).style.backgroundColor = '#f02d65';
+      (e.target as HTMLButtonElement).textContent = 'Add To Cart';
     }, 1000);
   };
 
-  const [quantity, dispatch] = useReducer(reducer, {
-    itemQuantityDisplaySt: 1,
-  });
+  const [quantity, dispatch] = useReducer(
+    reducer,
+    { itemQuantityDisplaySt: 1 },
+    (initialState) => initialState
+  );
   const starsReviews = () => {
     let rate = Math.floor(item?.rating.rate);
 
@@ -95,6 +101,7 @@ export default function ItemCard({ item }) {
 
     return starsArr;
   };
+
   return (
     <Card>
       <CardImageWrapper>
@@ -102,23 +109,13 @@ export default function ItemCard({ item }) {
           onClick={(e) => {
             navigate('/shop/' + item.id);
           }}
-          itemimage={item.image}
+          style={{ backgroundImage: `url(${item.image})` }}
         ></CardImage>
       </CardImageWrapper>
       <CardActions>
-        <ItemInfo
-          onClick={(e) => {
-            navigate('/shop/' + item.id);
-          }}
-        >
+        <ItemInfo>
           <ItemNameWrapper>
-            <ItemName>
-              {item.title.substring(0, 50)}...)
-              <a href='' style={{ color: '#ff3679' }}>
-                {' '}
-                see more
-              </a>
-            </ItemName>
+            <ItemName>{item.title}</ItemName>
             <ItemDescription>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat,
               officia?

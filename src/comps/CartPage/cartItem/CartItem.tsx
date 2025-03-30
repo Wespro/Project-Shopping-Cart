@@ -25,35 +25,36 @@ import {
   TitleDescriptionWrapper,
 } from './cartItemSC';
 import { useNavigate } from 'react-router-dom';
+import { cartItemType } from '@/Types/types';
 
-export default function CartItem({ item }) {
-  const [cartItemsSt, setCartItemsSt] = useContext(CartItemContext);
+export default function CartItem({ item }: { item: cartItemType }) {
+  const { cartItemsObj, setCartItemsObj } = useContext(CartItemContext);
   const navigate = useNavigate();
-  const editCartItemsSt = (action) => {
+  const editCartItemsObj = (action: string) => {
     switch (action) {
       case 'add':
-        setCartItemsSt({
-          ...cartItemsSt,
+        setCartItemsObj({
+          ...cartItemsObj,
           [item.item.id]: {
-            ...cartItemsSt[item.item.id],
-            quantity: cartItemsSt[item.item.id].quantity + 1,
+            ...cartItemsObj[item.item.id],
+            quantity: cartItemsObj[item.item.id].quantity + 1,
           },
         });
         break;
       case 'subtract':
-        setCartItemsSt({
-          ...cartItemsSt,
+        setCartItemsObj({
+          ...cartItemsObj,
           [item.item.id]: {
-            ...cartItemsSt[item.item.id],
-            quantity: cartItemsSt[item.item.id].quantity - 1,
+            ...cartItemsObj[item.item.id],
+            quantity: cartItemsObj[item.item.id].quantity - 1,
           },
         });
         break;
 
       case 'remove':
-        const copyOfCartItemsSt = { ...cartItemsSt };
-        delete copyOfCartItemsSt[item.item.id];
-        setCartItemsSt(copyOfCartItemsSt);
+        const copyOfCartItemsObj = { ...cartItemsObj };
+        delete copyOfCartItemsObj[item.item.id];
+        setCartItemsObj(copyOfCartItemsObj);
 
         break;
       default:
@@ -89,22 +90,12 @@ export default function CartItem({ item }) {
         onClick={(e) => {
           navigate('/shop/' + item.item.id);
         }}
-        itemimage={item.item.image}
+        style={{ backgroundImage: `url(${item.item.image})` }}
       ></CartItemImage>
       <InfoActionsContainer>
         <ItemInfoContainer>
           <TitleDescriptionWrapper>
-            <ItemTitle>
-              {item.item.title?.slice(0, 50)}...)
-              <a
-                onClick={(e) => {
-                  navigate('/shop/' + item.item.id);
-                }}
-                style={{ color: '#ff3679', cursor: 'pointer' }}
-              >
-                see more
-              </a>
-            </ItemTitle>
+            <ItemTitle>{item.item.title}</ItemTitle>
             <ItemDescription>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat,
               officia?
@@ -132,7 +123,7 @@ export default function CartItem({ item }) {
           <ItemQuantityControls>
             <PlusItemBtn
               onClick={(e) => {
-                item.quantity < 30 ? editCartItemsSt('add') : item.quantity;
+                item.quantity < 30 ? editCartItemsObj('add') : item.quantity;
               }}
             >
               +
@@ -140,7 +131,9 @@ export default function CartItem({ item }) {
             <ItemQuantityInput>{item.quantity}</ItemQuantityInput>
             <MinusItemBtn
               onClick={(e) => {
-                item.quantity > 1 ? editCartItemsSt('subtract') : item.quantity;
+                item.quantity > 1
+                  ? editCartItemsObj('subtract')
+                  : item.quantity;
               }}
             >
               -
@@ -149,7 +142,7 @@ export default function CartItem({ item }) {
         </ItemQuantityWrapper>
         <AddToCartCardBtn
           onClick={(e) => {
-            editCartItemsSt('remove');
+            editCartItemsObj('remove');
           }}
         >
           Remove

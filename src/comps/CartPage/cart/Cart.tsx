@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useMemo, useState } from 'react';
+import { useCallback, useContext, useMemo, useState } from 'react';
 import CartItemContext from '../../../context/CartItemContext';
 import CartItem from '../cartItem/CartItem';
 import {
@@ -21,30 +21,30 @@ import {
   TotalLabel,
   TotalWrapper,
 } from './CartSC';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import SuccessPage from '../../successComp/success';
 
 export default function Cart() {
-  const [cartItemsSt, setCartItemsSt] = useContext(CartItemContext);
+  const { cartItemsObj, setCartItemsObj } = useContext(CartItemContext);
   const [checkOut, setCheckOut] = useState(false);
 
   const navigate = useNavigate();
   const subtotal = useMemo(() => {
     let result = 0;
-    for (let item in cartItemsSt) {
-      if (cartItemsSt.hasOwnProperty(item)) {
-        result += cartItemsSt[item].item.price * cartItemsSt[item].quantity;
+    for (let item in cartItemsObj) {
+      if (cartItemsObj.hasOwnProperty(item)) {
+        result += cartItemsObj[item].item.price * cartItemsObj[item].quantity;
       }
     }
     return result;
-  }, [cartItemsSt]);
+  }, [cartItemsObj]);
 
   const displayCartItems = () => {
     let items = [];
-    if (Object.keys(cartItemsSt).length) {
-      for (const key in cartItemsSt) {
+    if (Object.keys(cartItemsObj).length) {
+      for (const key in cartItemsObj) {
         items.push(
-          <CartItem key={cartItemsSt[key].item.id} item={cartItemsSt[key]} />
+          <CartItem key={cartItemsObj[key].item.id} item={cartItemsObj[key]} />
         );
       }
     }
@@ -61,20 +61,20 @@ export default function Cart() {
   };
 
   const ClearItemsFunc = () => {
-    setCartItemsSt({});
+    setCartItemsObj({});
   };
 
   const checkoutFunc = useCallback(() => {
-    if (Object.keys(cartItemsSt).length) {
+    if (Object.keys(cartItemsObj).length) {
       setCheckOut(true);
-      setCartItemsSt({});
+      setCartItemsObj({});
       const setTimeoutFunc = () => {
         navigate('/shop');
         setTimeout(() => setCheckOut(false), 2000);
       };
       setTimeout(setTimeoutFunc, 5000);
     }
-  }, [cartItemsSt]);
+  }, [cartItemsObj]);
 
   return (
     <CartWrapper>
@@ -88,10 +88,12 @@ export default function Cart() {
             <SubtotalLabel>Subtotal:</SubtotalLabel>
             <Subtotal>{Math.floor(subtotal)}$</Subtotal>
           </SubtotalWrapper>
+          <hr />
           <TaxWrapper>
             <TaxLabel>Tax:</TaxLabel>
             <Tax>+2%</Tax>
           </TaxWrapper>
+          <hr />
           <TotalWrapper>
             <TotalLabel>Total:</TotalLabel>
             <Total>{Math.floor(subtotal + subtotal * 0.02)}$</Total>

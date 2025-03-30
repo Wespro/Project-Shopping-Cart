@@ -11,7 +11,7 @@ export const CartWrapper = styled.div`
 `;
 
 export const CartItemsDisplay = styled.div`
-  width: 70%;
+  width: clamp(20rem, 80vw, 80rem);
   min-height: 80vh;
   background-color: #2c313b;
   border-radius: 14px;
@@ -23,6 +23,7 @@ export const CartTitle = styled.h1`
   font-size: clamp(2rem, 3vw, 3rem);
   margin: 2rem;
   text-align: center;
+  font-weight: bold;
 `;
 export const CartItemsWrapper = styled.div`
   flex: 2 1 auto;
@@ -31,9 +32,13 @@ export const CartItemsWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 1rem;
+  gap: 3rem;
+  @media (max-width: 500px) {
+    padding: 1rem;
+  }
 `;
 export const NoItems = styled.h1`
+  font-size: clamp(1.8rem, 3vw, 3rem);
   text-align: center;
   color: #f02d65;
 `;
@@ -47,13 +52,17 @@ export const CartInvoiceWrapper = styled.div`
 export const SubtotalWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
-  gap: .5rem;
+  gap: 0.5rem;
   justify-content: space-between;
   align-items: center;
 `;
-export const SubtotalLabel = styled.h2``;
+export const SubtotalLabel = styled.h2`
+  font-size: clamp(1.2rem, 2vw, 1.5rem);
+`;
 export const Subtotal = styled.h2`
   color: gold;
+  font-weight: bold;
+  font-size: clamp(1.2rem, 2vw, 1.5rem);
 `;
 
 export const TaxWrapper = styled.div`
@@ -63,9 +72,13 @@ export const TaxWrapper = styled.div`
   justify-content: space-between;
   align-items: center;
 `;
-export const TaxLabel = styled.h2``;
+export const TaxLabel = styled.h2`
+  font-size: clamp(1.2rem, 2vw, 1.5rem);
+`;
 export const Tax = styled.h2`
   color: #f02d65;
+  font-weight: bold;
+  font-size: clamp(1.2rem, 2vw, 1.5rem);
 `;
 
 export const TotalWrapper = styled.div`
@@ -75,9 +88,13 @@ export const TotalWrapper = styled.div`
   justify-content: space-between;
   align-items: center;
 `;
-export const TotalLabel = styled.h2``;
+export const TotalLabel = styled.h2`
+  font-size: clamp(1.2rem, 2vw, 1.5rem);
+`;
 export const Total = styled.h2`
   color: gold;
+  font-weight: bold;
+  font-size: clamp(1.2rem, 2vw, 1.5rem);
 `;
 
 export const CartActionsWrapper = styled.div`
@@ -90,10 +107,11 @@ export const CartActionsWrapper = styled.div`
 `;
 
 export const ClearItemsButton = styled.button`
-
+  font-size: clamp(0.8rem, 1vw, 2rem);
+  background-color: #f02d65;
 `;
 
 export const CheckOutButton = styled.button`
+  font-size: clamp(0.8rem, 1vw, 2rem);
   background-color: green;
-  color: white;
 `;

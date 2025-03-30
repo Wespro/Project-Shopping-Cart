@@ -2,14 +2,15 @@ import styled from 'styled-components';
 
 export const Card = styled.div`
   min-height: 30rem;
-  flex: 0 1 25rem;
+  flex: 0 1 auto;
+  width: clamp(8rem, 80vw, 30rem);
   border-radius: 14px;
   box-shadow: 1px 1px 10px #f02d65;
   display: flex;
+
   flex-direction: column;
   background-color: #16191e;
   transition: 300ms ease;
-  cursor: pointer;
   &:hover {
     box-shadow: 1px 1px 30px #f02d65;
   }
@@ -20,12 +21,11 @@ export const CardImageWrapper = styled.div`
   min-height: 13rem;
   max-height: 12rem;
   padding: 1rem;
+  cursor: pointer;
 `;
-export const CardImage = styled.div.withConfig({
-  shouldForwardProp: (prop) => prop !== 'itemimage',
-})`
+
+export const CardImage = styled.div`
   height: 100%;
-  background-image: url(${({ itemimage }) => itemimage});
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
@@ -43,9 +43,10 @@ export const CardActions = styled.div`
 `;
 export const ItemInfo = styled.div`
   display: flex;
-  gap: 2rem;
+  gap: 1.5rem;
   justify-content: space-between;
   align-items: start;
+  flex-wrap: wrap;
 `;
 //ItemReviewsWrapper block
 export const ItemReviewsWrapper = styled.div`
@@ -59,6 +60,7 @@ export const ItemReviewsStarsWrapper = styled.div`
 `;
 
 export const ItemReviewsPeopleNum = styled.p`
+  flex: 0 0 auto;
   font-size: 1.1rem;
 `;
 // ItemName block
@@ -68,10 +70,13 @@ export const ItemNameWrapper = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: start;
-  gap: 0.5rem;
+  gap: 1rem;
+  flex: 1;
 `;
 export const ItemName = styled.h2`
-  font-size: 1rem;
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  line-height: 1.2;
+  font-weight: bold;
 `;
 export const ItemDescription = styled.p``;
 
@@ -87,6 +92,7 @@ export const ItemPriceName = styled.h3``;
 export const ItemPrice = styled.h2`
   font-size: 1.3rem;
   color: gold;
+  font-weight: bold;
 `;
 
 //ItemQuantity block
@@ -94,10 +100,12 @@ export const ItemQuantityWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 0.5rem;
 `;
 export const ItemQuantityLabel = styled.label`
   font-size: 0.9rem;
   font-weight: bold;
+  text-align: left;
 `;
 export const ItemQuantityInput = styled.h2`
   background-color: transparent;
