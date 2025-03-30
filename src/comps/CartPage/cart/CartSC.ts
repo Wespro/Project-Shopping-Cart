@@ -11,7 +11,7 @@ export const CartWrapper = styled.div`
 `;
 
 export const CartItemsDisplay = styled.div`
-  width: clamp(20rem, 80vw, 80rem);
+  width: clamp(10rem, 90vw, 80rem);
   min-height: 80vh;
   background-color: #2c313b;
   border-radius: 14px;
@@ -32,7 +32,7 @@ export const CartItemsWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 3rem;
+  gap: 2rem;
   @media (max-width: 500px) {
     padding: 1rem;
   }
