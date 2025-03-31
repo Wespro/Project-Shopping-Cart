@@ -21,9 +21,9 @@ export const ItemsControls = styled.div`
 `;
 
 export const SearchBar = styled.input`
-  flex: 1;
+  flex: 2 1 auto;
   width: clamp(200px, 40%, 400px);
-  padding: 0.7rem 1rem;
+  padding: 0.5rem 1.5rem;
   border: none;
   outline: none;
   border-radius: 50px;
@@ -46,6 +46,7 @@ export const PriceFilterInput = styled.input`
   flex: 1;
   width: clamp(200px, 30%, 400px);
   cursor: pointer;
+  accent-color: #ff3679;
 `;
 export const PriceFilterValue = styled.h3`
   color: gold;

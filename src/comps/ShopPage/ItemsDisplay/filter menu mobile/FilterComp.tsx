@@ -19,7 +19,7 @@ const ItemsControlsMobile = styled.div`
   align-items: center;
   gap: 3rem;
   border-radius: 14px;
-  background-color: #343434;
+  box-shadow: 1px 1px 10px #f02d65;
   padding: 2rem;
   @media (max-width: 700px) {
     gap: 4.5rem;

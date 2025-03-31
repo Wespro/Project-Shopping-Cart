@@ -25,10 +25,10 @@ export const VoidShop = styled.h1`
 `;
 export const NavLinkBrand = styled(Link)`
   font-size: clamp(1.5rem, 1.5vw, 4rem);
-  color: white;
+  color: #e2e5e9;
   text-shadow: 1px 1px 7px #f02d65;
   &:hover {
-    color: rgb(255, 130, 165);
+    color: white;
   }
 `;
 export const NavLinks = styled.ul`

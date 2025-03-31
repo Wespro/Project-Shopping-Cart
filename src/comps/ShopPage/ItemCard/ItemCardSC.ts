@@ -90,7 +90,7 @@ export const CardPiceWrapper = styled.div`
 export const ItemPriceName = styled.h3``;
 
 export const ItemPrice = styled.h2`
-  font-size: 1.3rem;
+  font-size: clamp(1rem, 2vw, 1.5rem);
   color: gold;
   font-weight: bold;
 `;
